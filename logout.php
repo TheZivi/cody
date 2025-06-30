@@ -1,18 +1,9 @@
 <?php
-require(__DIR__ . '/config_session.php');
-
-if(isset($_POST['logout_from_system'])){
-	unsetBoomCookie();
-	$mysqli->query("UPDATE `boom_users` SET `user_roomid` = '0', user_role = '0' WHERE `user_id` = '{$data["user_id"]}'");
-	leaveRoom();
-	if(isGuest($data)){
-		softGuestDelete($data);
-	}
-	echo 1;
-	die();	
-}
-if(isset($_POST['overwrite'])){
-	unsetBoomCookie();
-	die();
-}
+require('../config_session.php');
 ?>
+<div class="pad20 centered_element">
+	<p class="text_ultra theme_color"><i class="fa fa-power-off"></i></p>
+	<p class="bpad15"><?php echo $lang['want_logout']; ?></p>
+	<button onclick="logOut();" class="reg_button theme_btn"><?php echo $lang['yes']; ?></button>
+	<button class="reg_button cancel_modal default_btn"><?php echo $lang['no']; ?></button>
+</div>

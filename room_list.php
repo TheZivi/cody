@@ -11,11 +11,21 @@
 */
 require_once('../config_session.php');
 ?>
-<?php if(canRoom()){ ?>
-<div class="vpad15 hpad10">
-	<button  class="thin_button rounded_button theme_btn" onclick="openAddRoom();"><i class="fa fa-plus"></i> <?php echo $lang['add_room']; ?></button>
+<div class="modal_top">
+	<?php if(canRoom()){ ?>
+	<div onclick="openAddRoom();" class="bcell_mid hpad10 bold private_cleaning">
+		<i class="fa fa-plus"></i> <?php echo $lang['add_room']; ?>
+	</div>
+	<?php } ?>
+	<div class="modal_top_empty bold">
+	</div>
+	<div class="modal_top_element cancel_modal">
+		<i class="fa fa-times"></i>
+	</div>
 </div>
-<?php } ?>
-<div id="container_room">
-	<?php echo getRoomList('list'); ?>
+<div class="box_height600">
+	<div id="container_room">
+		<?php echo getRoomList('list'); ?>
+	</div>
+	<div class="clear"></div>
 </div>

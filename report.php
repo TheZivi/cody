@@ -1,23 +1,33 @@
 <?php
 require_once('../config_session.php');
 
-if(!boomAllow(8)){
+if(!isset($_POST['type'], $_POST['id'])){
 	die();
 }
-$report_list = '';
-$find_report = $mysqli->query("SELECT boom_report.*, boom_users.user_name, boom_users.user_id, boom_users.user_color, boom_users.user_tumb
-FROM boom_report, boom_users WHERE boom_report.report_user = boom_users.user_id
-ORDER BY report_date DESC LIMIT 40");
+$id = escape($_POST['id']);
+$type = escape($_POST['type']);
 
-if($find_report->num_rows > 0){
-	while($report = $find_report->fetch_assoc()){
-		$report_list .= boomTemplate('element/report_notify', $report);
-	}
-}
-else {
-	$report_list .= emptyZone($lang['no_report']);
+if(!canSendReport()){
+	echo 3;
+	die();
 }
 ?>
-<div class="boom_keep" id="container_report">
-	<?php echo $report_list; ?>
+
+<div class="pad25">
+	<div class="bpad15 text_med bold">
+		<i class="fa fa-exclamation-triangle error"></i> <?php echo $lang['report_post']; ?>
+	</div>
+	<div class="bpad10">
+		<p class="text_small" ><?php echo $lang['report_warning']; ?></p>
+	</div>
+	<div class="setting_element">
+		<p class="label"><?php echo $lang['reason']; ?></p>
+		<select id="report_reason">
+			<?php echo listReport(); ?>
+		</select>
+	</div>
+	<div class="tpad15">
+		<button onclick="makeReport(<?php echo $type; ?>,<?php echo $id; ?>);" class="reg_button theme_btn"><?php echo $lang['report']; ?></button>
+		<button class="reg_button close_over default_btn"><?php echo $lang['cancel']; ?></button>
+	</div>
 </div>
